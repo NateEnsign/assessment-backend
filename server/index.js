@@ -20,6 +20,17 @@ const { getFortune } = require('./controller')
 app.get("/api/fortune", getFortune)
 
 
+const {getBook, createBook, updateBook, deleteBook} = require('./controller.js')
+
+app.get('/api/books', getBook)
+
+app.post('/api/books', createBook)
+
+app.put('/api/books/:id', updateBook)
+
+app.delete('/api/books/:id', deleteBook)
+
+
 
 
 app.listen(4000, () => console.log("Server running on 4000"));

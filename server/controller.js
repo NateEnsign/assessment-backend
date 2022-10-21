@@ -1,3 +1,7 @@
+const books = require('./db.json')
+
+let newBookId = 4
+
 module.exports = {
 
     getCompliment: (req, res) => {
@@ -18,5 +22,47 @@ module.exports = {
     
         res.status(200).send(randomFortune)
     },
+
+    ///////////
+
+
+
+    getBook: (req, res) => {
+        res.status(200).send(books)
+    },
+    deleteBook: (req, res) => {
+        let index = books.findIndex(elem => elem.id === +req.params.id)
+        books.splice(index, 1)
+        res.status(200).send(books)
+    },
+    createBook: (req, res) => {
+        const {title, price, imageURL} = req.body
+
+        let newBook = {
+            id: newBookId,
+            title,
+            price,
+            imageURL,
+        }
+
+        books.push(newBook)
+        res.status(200).send(books)
+    },
+    updateBook: (req, res) => {
+        let id = req.params.id
+        let type = req.body.type
+        let index = books.findIndex(element => element.id === +id)
+        if (type === 'plus'){
+            books[index].price += 1
+            res.status(200).send(books)
+        }else if (type === 'minus'){
+            books[index].price -= 1
+            res.status(200).send(books)
+        }else{
+            res.sendStatus(400)
+        }
+    },
+
+
 
 }
